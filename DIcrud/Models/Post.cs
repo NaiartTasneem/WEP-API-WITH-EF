@@ -2,9 +2,9 @@
 
 namespace DIcrud.Models
 {
-    public class Post
+    public class Post:BaseModel
     {
-        public int Id { get; set; }
+       
         public string Title{ get; set; }
         
         public int UserId { get; set; }

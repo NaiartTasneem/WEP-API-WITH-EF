@@ -8,23 +8,23 @@ namespace DIcrud.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
-    {   private UserInterface _UsersRepo;
+    {   private IUserRepo _UsersRepo;
        
 
 
-        public UserController(UserInterface UserRepo)
+        public UserController(IUserRepo UserRepo)
         {
             _UsersRepo = UserRepo;
         }
         [HttpGet]
         public ActionResult<List<User>> GetAll()
         {
-            return _UsersRepo.GetAll();
+            return Ok( _UsersRepo.GetAll());
         }
         [HttpGet("{id}")]
         public ActionResult<User> GetUser(int id)
         {
-            var user = _UsersRepo.GetUser(id);
+            var user = _UsersRepo.GetObj(id);
             if (user == null)
                 return NotFound();
             return Ok(user);
@@ -33,7 +33,7 @@ namespace DIcrud.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var user = _UsersRepo.GetUser(id);
+            var user = _UsersRepo.GetObj(id);
             if (user == null)
                 return NotFound();
             _UsersRepo.Delete(id);
@@ -51,9 +51,8 @@ namespace DIcrud.Controllers
         [HttpPut]
         public ActionResult Update([FromBody]User user)
         {
-            var _user = _UsersRepo.GetUser(user.Id);
-            if (_user == null)
-                return NotFound();
+           
+            
             _UsersRepo.Update(user);
             return Ok();
         }

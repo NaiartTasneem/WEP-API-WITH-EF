@@ -8,11 +8,11 @@ namespace DIcrud.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class PostController : ControllerBase
-    {   private PostInterface _PostsRepo;
+    {   private IPostRepo _PostsRepo;
        
 
 
-        public PostController(PostInterface postRepo)
+        public PostController(IPostRepo postRepo)
         {
             _PostsRepo = postRepo;
         }
@@ -24,7 +24,7 @@ namespace DIcrud.Controllers
         [HttpGet("{id}")]
         public ActionResult<Post> GetUser(int id)
         {
-            var post = _PostsRepo.GetPost(id);
+            var post = _PostsRepo.GetObj(id);
             if (post == null)
                 return NotFound();
             return Ok(post);
@@ -33,7 +33,7 @@ namespace DIcrud.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var post = _PostsRepo.GetPost(id);
+            var post = _PostsRepo.GetObj(id);
             if (post == null)
                 return NotFound();
             _PostsRepo.Delete(id);
@@ -51,9 +51,7 @@ namespace DIcrud.Controllers
         [HttpPut]
         public ActionResult Update([FromBody]Post post)
         {
-            var _post = _PostsRepo.GetPost(post.Id);
-            if (_post== null)
-                return NotFound();
+         
             _PostsRepo.Update(post);
             return Ok();
         }

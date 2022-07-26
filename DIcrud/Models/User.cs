@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DIcrud.Models
 {
-    public class User
+    public class User:BaseModel
     {
-        [Key]
-        public int Id { get; set; }
+       
         public string FirstName { get; set; }
          public string LastName { get; set; }
 
         public ICollection<Post>? Post { get; set; }
+      
     }
 }
