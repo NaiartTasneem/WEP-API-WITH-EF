@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "04HEIUXpJr6VMoy1h7DwQwXq0S5KTnizzF4QL7rN9WiNhIxox57IyKfdur1XYRFlOIUYBgzqHuxvDasuK/TEoQ==",
+  "dgSpecHash": "oZ7WA9dAo08QV6FviiUjh8u8IXuQrAs1r59/7hd2kBueOPxqCu79tea6DdrPY4vNmN6ORCI742cdZHBiVS1DRw==",
   "success": true,
-  "projectFilePath": "C:\\tasneemneirat. 201810658\\iconnect\\DIcrud\\DIcrud\\DIcrud.csproj",
+  "projectFilePath": "C:\\tasneemneirat. 201810658\\iconnect\\ttt\\WEP-API-WITH-EF\\DIcrud\\DIcrud.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tasne\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\tasne\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

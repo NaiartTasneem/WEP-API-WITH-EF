@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using DIcrud.Repo;
 using DIcrud.Models;
+using DIcrud.Filters;
 
 namespace DIcrud.Controllers
 {
@@ -9,25 +10,27 @@ namespace DIcrud.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {   private IUserRepo _UsersRepo;
-       
 
 
         public UserController(IUserRepo UserRepo)
         {
             _UsersRepo = UserRepo;
         }
+       
         [HttpGet]
+        
         public ActionResult<List<User>> GetAll()
         {
             return Ok( _UsersRepo.GetAll());
         }
         [HttpGet("{id}")]
+        [AppRole("Admin")]
         public ActionResult<User> GetUser(int id)
         {
             var user = _UsersRepo.GetObj(id);
             if (user == null)
-                return NotFound();
-            return Ok(user);
+             return NotFound();
+            return Ok(user) ;
 
         }
         [HttpDelete("{id}")]
@@ -35,13 +38,14 @@ namespace DIcrud.Controllers
         {
             var user = _UsersRepo.GetObj(id);
             if (user == null)
-                return NotFound();
-            _UsersRepo.Delete(id);
+              return NotFound();
+           _UsersRepo.Delete(id);
             return Ok();
 
         }
 
         [HttpPost]
+      
         public ActionResult Create([FromBody]User newUser)
         {
             _UsersRepo.Add(newUser);

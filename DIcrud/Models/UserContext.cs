@@ -6,12 +6,14 @@ namespace DIcrud.Models
     {
        
             public UserContext(DbContextOptions options) : base(options) { }
-            DbSet<User>users
+
+        public object User { get; internal set; }
+        public DbSet<User>users
             {
                 get;
                 set;
             }
-        DbSet <Post> Post
+        public DbSet <Post> Post
         {
             get;
             set;

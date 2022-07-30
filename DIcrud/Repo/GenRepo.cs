@@ -13,7 +13,7 @@ namespace DIcrud.Repo
     }
     public class GenRepo<T> : IGenRepo<T> where T :class ,IBaseModel
     {
-        readonly UserContext _context;
+       public  readonly UserContext _context;
         
 
         public GenRepo(UserContext context)

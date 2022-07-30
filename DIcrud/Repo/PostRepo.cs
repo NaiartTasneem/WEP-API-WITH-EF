@@ -1,5 +1,6 @@
 ﻿using DIcrud.Controllers;
 using DIcrud.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DIcrud.Repo
 {
@@ -15,9 +16,10 @@ namespace DIcrud.Repo
 
 
         }
-
-
-
+        public new List<Post>? GetAll()
+        {
+            return _context.Post.Include(p => p.User).ToList();
+        }
 
     }
 }

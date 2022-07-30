@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using DIcrud.Models;
+using DIcrud.CustomExc;
 using DIcrud.Repo;
 using DIcrud.Controllers;
 using DIcrud;
+using Microsoft.AspNetCore.Identity;
+using DIcrud.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +19,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //
 builder.Services.ConfigureServices();
-//
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new AppRole());
+
+});
+//builder.Services.AddScoped<AppRoleAttribute>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,7 +35,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
    
 }
-
+app.ConfigureCustomExceptionMiddleware();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
