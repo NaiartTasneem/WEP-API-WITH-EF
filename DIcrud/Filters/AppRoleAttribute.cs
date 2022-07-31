@@ -1,33 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
 namespace DIcrud.Filters
 {
-    internal class AppRole :Attribute, IActionFilter
+   public class AppRole : IActionFilter
     {
-        //private StringValues d;
-        private string v;
-
-        public AppRole(string v)
-        {
-            this.v = v;
-        }
-
-        public AppRole()
-        {
-        }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-
+            var auth = context.HttpContext.Request.Headers["Role"];
           // context.HttpContext.Request.Headers.TryGetValue("Role", out d);
-           var val = context.HttpContext.Request.Headers.Where(t => t.Key == "Role").Where(t => t.Value == v);
-            if (val.Any())
+          // var val = context.HttpContext.Request.Headers.Where(t => t.Key == "Role").Where(t => t.Value == v);
+            if (auth=="admin")
             {
-
+                 return;
             }
             else
             {
+                context.Result = new BadRequestObjectResult("You Are Not An Admin");
                 return;
             }
 

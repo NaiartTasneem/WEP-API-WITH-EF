@@ -18,13 +18,12 @@ namespace DIcrud.Controllers
         }
        
         [HttpGet]
-        
         public ActionResult<List<User>> GetAll()
         {
             return Ok( _UsersRepo.GetAll());
         }
         [HttpGet("{id}")]
-        [AppRole("Admin")]
+        [ServiceFilter(typeof(AppRole))]
         public ActionResult<User> GetUser(int id)
         {
             var user = _UsersRepo.GetObj(id);
@@ -45,7 +44,6 @@ namespace DIcrud.Controllers
         }
 
         [HttpPost]
-      
         public ActionResult Create([FromBody]User newUser)
         {
             _UsersRepo.Add(newUser);

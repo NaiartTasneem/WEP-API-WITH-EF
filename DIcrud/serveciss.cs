@@ -1,4 +1,5 @@
 ﻿using DIcrud.CustomExc;
+using DIcrud.Filters;
 using DIcrud.Models;
 using DIcrud.Repo;
 namespace DIcrud
@@ -13,10 +14,13 @@ namespace DIcrud
 
            services.AddScoped<IUserRepo, UserRepo>();
            services.AddScoped<IPostRepo, PostRepo>();
+            services.AddScoped<AppRole>();
         }
         public static void ConfigureCustomExceptionMiddleware(this WebApplication app)
         {
             app.UseMiddleware<ExceptionMiddleware>();
         }
+
+       
     }
 }

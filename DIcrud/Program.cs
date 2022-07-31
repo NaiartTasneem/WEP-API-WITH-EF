@@ -19,12 +19,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //
 builder.Services.ConfigureServices();
-builder.Services.AddControllers(options =>
-{
-    options.Filters.Add(new AppRole());
-
-});
-//builder.Services.AddScoped<AppRoleAttribute>();
 
 var app = builder.Build();
 

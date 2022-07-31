@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using DIcrud.Repo;
 using DIcrud.Models;
+using DIcrud.Filters;
 
 namespace DIcrud.Controllers
 {
@@ -17,11 +18,13 @@ namespace DIcrud.Controllers
             _PostsRepo = postRepo;
         }
         [HttpGet]
+       
         public ActionResult<List<Post>> GetAll()
         {
             return _PostsRepo.GetAll();
         }
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(AppRole))]
         public ActionResult<Post> GetUser(int id)
         {
             var post = _PostsRepo.GetObj(id);
