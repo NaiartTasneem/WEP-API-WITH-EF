@@ -16,7 +16,7 @@ namespace DIcrud.Repo
 
 
         }
-        public new List<Post>? GetAll()
+        public async new Task<List<Post>>? GetAll()
         {
             return _context.Post.Include(p => p.User).ToList();
         }

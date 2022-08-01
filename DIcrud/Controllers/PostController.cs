@@ -3,59 +3,77 @@ using Microsoft.AspNetCore.Mvc;
 using DIcrud.Repo;
 using DIcrud.Models;
 using DIcrud.Filters;
+using AutoMapper;
+using DIcrud.vms;
 
 namespace DIcrud.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class PostController : ControllerBase
-    {   private IPostRepo _PostsRepo;
-       
-
-
-        public PostController(IPostRepo postRepo)
+    {   
+        private IPostRepo _PostsRepo;
+        private readonly IMapper _mapper;
+        
+      
+        public PostController(IPostRepo postRepo, IMapper mapper)
         {
             _PostsRepo = postRepo;
+            _mapper = mapper;
+          
         }
         [HttpGet]
        
-        public ActionResult<List<Post>> GetAll()
+        public async Task<List<PostVM>> GetAll()
         {
-            return _PostsRepo.GetAll();
-        }
-        [HttpGet("{id}")]
-        [ServiceFilter(typeof(AppRole))]
-        public ActionResult<Post> GetUser(int id)
-        {
-            var post = _PostsRepo.GetObj(id);
-            if (post == null)
-                return NotFound();
-            return Ok(post);
+            var Posts = await _PostsRepo.GetAll();
+
+            return _mapper.Map<List<Post>, List<PostVM>>(Posts);
 
         }
+
+
+        [HttpGet("{id}")]
+        [ServiceFilter(typeof(AppRole))]
+        public async Task<ActionResult<PostVM>> GetPost(int id)
+        {
+            var post= _PostsRepo.GetObj(id);
+            var _mappedPost = _mapper.Map<PostVM>(post);
+            if (_mappedPost == null)
+            return NotFound();
+            return _mappedPost;
+
+        }
+
+
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             var post = _PostsRepo.GetObj(id);
-            if (post == null)
+            var _mappedPost = _mapper.Map<Post>(post);
+            if (_mappedPost == null)
                 return NotFound();
             _PostsRepo.Delete(id);
             return Ok();
 
+
         }
 
+
         [HttpPost]
-        public ActionResult Create([FromBody] Post newPost)
+        public async Task<ActionResult> Create([FromBody] PostVM newPost)
         {
-            _PostsRepo.Add(newPost);
+            var _mappedPost = _mapper.Map<Post>(newPost);
+            _PostsRepo.Add(_mappedPost);
             return Ok();
         }
 
+
         [HttpPut]
-        public ActionResult Update([FromBody]Post post)
+        public async Task<ActionResult> Update([FromBody]PostVM post)
         {
-         
-            _PostsRepo.Update(post);
+            var _mappedPost = _mapper.Map<Post>(post);
+            _PostsRepo.Update(_mappedPost);
             return Ok();
         }
     }

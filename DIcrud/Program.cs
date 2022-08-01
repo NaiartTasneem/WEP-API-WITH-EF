@@ -4,6 +4,7 @@ using DIcrud.CustomExc;
 using DIcrud.Repo;
 using DIcrud.Controllers;
 using DIcrud;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using DIcrud.Filters;
 
@@ -20,6 +21,8 @@ builder.Services.AddSwaggerGen();
 //
 builder.Services.ConfigureServices();
 
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

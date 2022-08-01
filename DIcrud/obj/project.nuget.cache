@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "oZ7WA9dAo08QV6FviiUjh8u8IXuQrAs1r59/7hd2kBueOPxqCu79tea6DdrPY4vNmN6ORCI742cdZHBiVS1DRw==",
+  "dgSpecHash": "4iEoY7m13XAgMcnzMj2/caQUOwGk3/kwjx+zI5A84TYEM7Tra6WA+20O8ufZJCNsQYWC5dH174loKF0LDbLFDQ==",
   "success": true,
   "projectFilePath": "C:\\tasneemneirat. 201810658\\iconnect\\ttt\\WEP-API-WITH-EF\\DIcrud\\DIcrud.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\tasne\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
+    "C:\\Users\\tasne\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
     "C:\\Users\\tasne\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
-    "C:\\Users\\tasne\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\tasne\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\tasne\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "C:\\Users\\tasne\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
     "C:\\Users\\tasne\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.7\\microsoft.entityframeworkcore.6.0.7.nupkg.sha512",

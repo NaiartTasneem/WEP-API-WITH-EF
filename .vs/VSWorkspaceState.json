@@ -4,8 +4,9 @@
     "\\DIcrud",
     "\\DIcrud\\Controllers",
     "\\DIcrud\\Filters",
+    "\\DIcrud\\Models",
     "\\DIcrud\\Repo"
   ],
-  "SelectedNode": "\\DIcrud.sln",
+  "SelectedNode": "\\DIcrud\\Models\\ErrorDetails.cs",
   "PreviewInSolutionExplorer": false
 }

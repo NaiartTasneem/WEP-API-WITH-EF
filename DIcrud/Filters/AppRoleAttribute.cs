@@ -10,8 +10,6 @@ namespace DIcrud.Filters
         public void OnActionExecuting(ActionExecutingContext context)
         {
             var auth = context.HttpContext.Request.Headers["Role"];
-          // context.HttpContext.Request.Headers.TryGetValue("Role", out d);
-          // var val = context.HttpContext.Request.Headers.Where(t => t.Key == "Role").Where(t => t.Value == v);
             if (auth=="admin")
             {
                  return;

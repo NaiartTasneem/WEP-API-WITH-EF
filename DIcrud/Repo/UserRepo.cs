@@ -2,6 +2,7 @@
 using DIcrud.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace DIcrud.Repo
 {
     public interface IUserRepo : IGenRepo<User>
@@ -17,7 +18,7 @@ namespace DIcrud.Repo
         }
 
      
-        public new List<User>? GetAll()
+        public async new Task<List<User>>? GetAll()
         {
             return _context.users.Include(p => p.Post).ToList();
         }

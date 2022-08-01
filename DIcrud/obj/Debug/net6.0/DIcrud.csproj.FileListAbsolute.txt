@@ -120,3 +120,5 @@ C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\obj\Debug\net6.0
 C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\obj\Debug\net6.0\DIcrud.pdb
 C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\obj\Debug\net6.0\DIcrud.genruntimeconfig.cache
 C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\obj\Debug\net6.0\ref\DIcrud.dll
+C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\bin\Debug\net6.0\AutoMapper.dll
+C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
