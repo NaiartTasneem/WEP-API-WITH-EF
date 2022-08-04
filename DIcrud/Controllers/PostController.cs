@@ -5,11 +5,15 @@ using DIcrud.Models;
 using DIcrud.Filters;
 using AutoMapper;
 using DIcrud.vms;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DIcrud.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
+   
+
     public class PostController : ControllerBase
     {   
         private IPostRepo _PostsRepo;
@@ -26,7 +30,7 @@ namespace DIcrud.Controllers
        
         public async Task<List<PostVM>> GetAll()
         {
-            var Posts = await _PostsRepo.GetAll();
+            var Posts = await _PostsRepo.GetAll<Post>();
 
             return _mapper.Map<List<Post>, List<PostVM>>(Posts);
 
@@ -34,10 +38,10 @@ namespace DIcrud.Controllers
 
 
         [HttpGet("{id}")]
-        [ServiceFilter(typeof(AppRole))]
+       // [ServiceFilter(typeof(AppRole))]
         public async Task<ActionResult<PostVM>> GetPost(int id)
         {
-            var post= _PostsRepo.GetObj(id);
+            var post= _PostsRepo.GetObj<Post>(id);
             var _mappedPost = _mapper.Map<PostVM>(post);
             if (_mappedPost == null)
             return NotFound();
@@ -49,7 +53,7 @@ namespace DIcrud.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var post = _PostsRepo.GetObj(id);
+            var post = _PostsRepo.GetObj<Post>(id);
             var _mappedPost = _mapper.Map<Post>(post);
             if (_mappedPost == null)
                 return NotFound();

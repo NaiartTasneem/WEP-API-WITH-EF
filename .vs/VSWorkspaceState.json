@@ -2,11 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\DIcrud",
-    "\\DIcrud\\Controllers",
-    "\\DIcrud\\Filters",
-    "\\DIcrud\\Models",
-    "\\DIcrud\\Repo"
+    "\\DIcrud\\Controllers"
   ],
-  "SelectedNode": "\\DIcrud\\Models\\ErrorDetails.cs",
+  "SelectedNode": "\\DIcrud\\Program.cs",
   "PreviewInSolutionExplorer": false
 }

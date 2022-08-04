@@ -1,6 +1,10 @@
-﻿using DIcrud.Controllers;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using DIcrud.Controllers;
 using DIcrud.Models;
+using DIcrud.vms;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace DIcrud.Repo
 {
@@ -11,15 +15,25 @@ namespace DIcrud.Repo
 
     public class PostRepo : GenRepo<Post>,IPostRepo
     {
-        public PostRepo(UserContext context) : base(context)
+        public IMapper _mapper;
+        public PostRepo(UserContext context, IMapper mapper) : base(context, mapper)
         {
+            _mapper = mapper;
 
 
         }
-        public async new Task<List<Post>>? GetAll()
+      /*  public async new Task<List<PostVM>>? GetAll()
         {
-            return _context.Post.Include(p => p.User).ToList();
+            return await _context.Post
+                .ProjectTo<PostVM>(_mapper.ConfigurationProvider).ToListAsync();
         }
+        public new PostVM? GetObj<PostVM>(int id) where PostVM : class, IBaseModel
+        {
+            return _context.Post
+                .ProjectTo<PostVM>(_mapper.ConfigurationProvider).FirstOrDefault(c => c.Id == id);
+
+
+        }*/
 
     }
 }

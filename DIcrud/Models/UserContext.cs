@@ -1,11 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using DIcrud.Auth;
 
 namespace DIcrud.Models
 {
-    public class UserContext: DbContext
+    public class UserContext : IdentityDbContext<User, UserRole, int>
     {
        
-            public UserContext(DbContextOptions options) : base(options) { }
+            public UserContext(DbContextOptions<UserContext> options) : base(options) { }
 
         public object User { get; internal set; }
         public DbSet<User>users

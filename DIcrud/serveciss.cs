@@ -3,6 +3,7 @@ using DIcrud.Filters;
 using DIcrud.Models;
 using DIcrud.Repo;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 
 namespace DIcrud
 {
@@ -13,17 +14,17 @@ namespace DIcrud
             services.AddMvc();
             services.AddSwaggerGen();
 
-
+         //  services.AddIdentity<IdentityUser, IdentityRole>();
            services.AddScoped<IUserRepo, UserRepo>();
            services.AddScoped<IPostRepo, PostRepo>();
             services.AddScoped<AppRole>();
         
         }
-        public static void ConfigureCustomExceptionMiddleware(this WebApplication app)
+        /*public static void ConfigureCustomExceptionMiddleware(this WebApplication app)
         {
             app.UseMiddleware<ExceptionMiddleware>();
         }
-
+       */
        
     }
 }

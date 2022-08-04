@@ -1,13 +1,17 @@
-﻿using DIcrud.Models;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using DIcrud.Models;
+using DIcrud.vms;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace DIcrud.Repo
 {
     public interface IGenRepo<T> where T :class ,IBaseModel
     { 
 
-        public Task<List<T>>? GetAll();
-        public Task<T> GetObj(int id);
+        public Task<List<TVM>>? GetAll<TVM>();
+        public TVM? GetObj<TVM>(int id) where TVM : class, IBaseModel;
         public void Delete(int id);
         public Task<T> Add(T obj);
         public Task<T> Update(T obj);
@@ -15,27 +19,30 @@ namespace DIcrud.Repo
     }
     public class GenRepo<T> : IGenRepo<T> where T :class ,IBaseModel
     {
-       public  readonly UserContext _context;
-        
+       public UserContext _context;
+       public IMapper _mapper;
 
-        public GenRepo(UserContext context)
+        public UserContext Context { get; }
+
+        public GenRepo(UserContext context ,IMapper mapper)
         {
             _context=context;
-
-
-        }
-
-        public async Task<List<T>>? GetAll()
-        {
-
-            return _context.Set<T>().ToList();
-
-                   // _context.SaveChangesAsync();
+            _mapper = mapper;
 
         }
-        public async Task<T> GetObj(int id)
+
+
+        public async Task<List<TVM>>? GetAll<TVM>()
         {
-            return _context.Set<T>().Find(id);
+            return await _context.Set<T>()
+                .ProjectTo<TVM>(_mapper.ConfigurationProvider).ToListAsync();
+          
+
+        }
+        public TVM? GetObj<TVM>(int id) where TVM : class, IBaseModel
+        {
+            return _context.Set<T>()
+                .ProjectTo<TVM>(_mapper.ConfigurationProvider).FirstOrDefault(c => c.Id == id);
        
 
         }

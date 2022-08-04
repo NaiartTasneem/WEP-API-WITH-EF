@@ -25,19 +25,18 @@ namespace DIcrud.Controllers
         [HttpGet]
          public  async Task<List<UserVM>> GetAll()
           {
-             var users = await _UsersRepo.GetAll();
+             return await _UsersRepo.GetAll<UserVM>();
 
-              return _mapper.Map<List<User>, List<UserVM>>(users);
-
+             
           }
 
 
         [HttpGet("{id}")]
-        [ServiceFilter(typeof(AppRole))]
+       // [ServiceFilter(typeof(AppRole))]
         public async Task<ActionResult<UserVM>> GetUser(int id)
         {
           
-            var user = _UsersRepo.GetObj(id);
+            var user = _UsersRepo.GetObj<User>(id);
             var _mappedUser = _mapper.Map<UserVM>(user);
             if (_mappedUser == null)
              return NotFound();
@@ -50,7 +49,7 @@ namespace DIcrud.Controllers
         public async Task<ActionResult> Delete(int id)
         {
            
-            var user = _UsersRepo.GetObj(id);
+            var user = _UsersRepo.GetObj<User>(id);
             var _mappedUser = _mapper.Map<User>(user);
             if (_mappedUser == null)
               return NotFound();

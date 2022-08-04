@@ -122,3 +122,9 @@ C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\obj\Debug\net6.0
 C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\obj\Debug\net6.0\ref\DIcrud.dll
 C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\bin\Debug\net6.0\AutoMapper.dll
 C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+C:\tasneemneirat. 201810658\iconnect\ttt\WEP-API-WITH-EF\DIcrud\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
