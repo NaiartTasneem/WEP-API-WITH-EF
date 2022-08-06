@@ -6,6 +6,9 @@ using DIcrud.Filters;
 using AutoMapper;
 using DIcrud.vms;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
 namespace DIcrud.Controllers
 {
@@ -67,11 +70,29 @@ namespace DIcrud.Controllers
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] PostVM newPost)
         {
-            var _mappedPost = _mapper.Map<Post>(newPost);
-            _PostsRepo.Add(_mappedPost);
+            /* var _mappedPost = _mapper.Map<Post>(newPost);
+             _PostsRepo.Add(_mappedPost);
+             return Ok();*/
+            var tokenHandler = new JwtSecurityTokenHandler();
+         //   var SecretKey = config.GetValue<string>("SecretKey");
+           // var key = Encoding.ASCII.GetBytes(SecretKey);
+            var token = HttpContext.Request.Headers["Authorization"];
+
+            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+               // IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ClockSkew = TimeSpan.Zero
+            }, out SecurityToken validatedToken);
+
+            var jwtToken = (JwtSecurityToken)validatedToken;
+            var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "Id ").Value);
+
+
             return Ok();
         }
-
 
         [HttpPut]
         public async Task<ActionResult> Update([FromBody]PostVM post)

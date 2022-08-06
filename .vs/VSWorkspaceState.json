@@ -4,6 +4,6 @@
     "\\DIcrud",
     "\\DIcrud\\Controllers"
   ],
-  "SelectedNode": "\\DIcrud\\Program.cs",
+  "SelectedNode": "\\DIcrud\\Controllers\\PostController.cs",
   "PreviewInSolutionExplorer": false
 }

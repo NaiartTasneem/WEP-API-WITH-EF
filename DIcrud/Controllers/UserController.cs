@@ -5,6 +5,7 @@ using DIcrud.Models;
 using DIcrud.Filters;
 using AutoMapper;
 using DIcrud.vms;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DIcrud.Controllers
 {
@@ -61,6 +62,7 @@ namespace DIcrud.Controllers
 
 
         [HttpPost]
+        //[Authorize(Roles = "Admin")]
         public async Task<ActionResult> Create([FromBody]UserVM newUser)
         {
             var _mappedUser = _mapper.Map<User>(newUser);
