@@ -9,13 +9,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using System.Security.Claims;
 
 namespace DIcrud.Controllers
 {
-    [Authorize]
+   
     [Route("api/[controller]/[action]")]
     [ApiController]
-   
+    [Authorize]
 
     public class PostController : ControllerBase
     {   
@@ -31,14 +32,21 @@ namespace DIcrud.Controllers
         }
         [HttpGet]
        
-        public async Task<List<PostVM>> GetAll()
+      public async Task<List<PostVM>> GetAll()
         {
             var Posts = await _PostsRepo.GetAll<Post>();
 
             return _mapper.Map<List<Post>, List<PostVM>>(Posts);
 
         }
+        [HttpGet]
+        public List<PostVM> GetBySearch(int PageN,int pageSize,string phrase)
+        {
+            var response = _PostsRepo.SearchPost(PageN, pageSize, phrase);
+            return _mapper.Map<List<Post>, List<PostVM>>(response);
 
+            
+        }
 
         [HttpGet("{id}")]
        // [ServiceFilter(typeof(AppRole))]
@@ -70,35 +78,29 @@ namespace DIcrud.Controllers
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] PostVM newPost)
         {
-            /* var _mappedPost = _mapper.Map<Post>(newPost);
-             _PostsRepo.Add(_mappedPost);
-             return Ok();*/
-            var tokenHandler = new JwtSecurityTokenHandler();
-         //   var SecretKey = config.GetValue<string>("SecretKey");
-           // var key = Encoding.ASCII.GetBytes(SecretKey);
-            var token = HttpContext.Request.Headers["Authorization"];
+             var _mappedPost = _mapper.Map<Post>(newPost);
+            
 
-            tokenHandler.ValidateToken(token, new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-               // IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ClockSkew = TimeSpan.Zero
-            }, out SecurityToken validatedToken);
+            var claimsIdentity = this.User.Identity as ClaimsIdentity;
+            var userId = claimsIdentity.FindFirst("Id")?.Value;
 
-            var jwtToken = (JwtSecurityToken)validatedToken;
-            var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "Id ").Value);
-
-
+            _mappedPost.UserId = Convert.ToInt32(userId);
+            _PostsRepo.Add(_mappedPost, _mappedPost.UserId);
             return Ok();
+
+
         }
 
         [HttpPut]
         public async Task<ActionResult> Update([FromBody]PostVM post)
         {
             var _mappedPost = _mapper.Map<Post>(post);
-            _PostsRepo.Update(_mappedPost);
+
+            var claimsIdentity = this.User.Identity as ClaimsIdentity;
+            var userId = claimsIdentity.FindFirst("Id")?.Value;
+
+            _mappedPost.UserId = Convert.ToInt32(userId);
+            _PostsRepo.Update(_mappedPost, _mappedPost.UserId);
             return Ok();
         }
     }

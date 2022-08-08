@@ -4,12 +4,13 @@ using DIcrud.Controllers;
 using DIcrud.Models;
 using DIcrud.vms;
 using Microsoft.EntityFrameworkCore;
-
+using System.Drawing;
 
 namespace DIcrud.Repo
 {
     public interface IPostRepo : IGenRepo<Post>
     {
+        public List<Post> SearchPost(int pageN, int pagesize, string Search);
 
     }
 
@@ -19,21 +20,24 @@ namespace DIcrud.Repo
         public PostRepo(UserContext context, IMapper mapper) : base(context, mapper)
         {
             _mapper = mapper;
+            _context = context;
 
 
         }
-      /*  public async new Task<List<PostVM>>? GetAll()
+        public List<Post> SearchPost(int pageN, int pagesize, string Search)
         {
-            return await _context.Post
-                .ProjectTo<PostVM>(_mapper.ConfigurationProvider).ToListAsync();
+
+          
+            var pagedData = _context.Post
+           .Skip((pageN - 1) * pagesize)
+           .Take(pageN)
+           .Where(s => s.Title.Contains(Search))
+           .ToList();
+            return pagedData;
+           
+
         }
-        public new PostVM? GetObj<PostVM>(int id) where PostVM : class, IBaseModel
-        {
-            return _context.Post
-                .ProjectTo<PostVM>(_mapper.ConfigurationProvider).FirstOrDefault(c => c.Id == id);
-
-
-        }*/
+       
 
     }
 }

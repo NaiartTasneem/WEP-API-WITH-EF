@@ -6,6 +6,7 @@ using DIcrud.Filters;
 using AutoMapper;
 using DIcrud.vms;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace DIcrud.Controllers
 {
@@ -66,7 +67,11 @@ namespace DIcrud.Controllers
         public async Task<ActionResult> Create([FromBody]UserVM newUser)
         {
             var _mappedUser = _mapper.Map<User>(newUser);
-            _UsersRepo.Add(_mappedUser);
+            var claimsIdentity = this.User.Identity as ClaimsIdentity;
+            var userId = claimsIdentity.FindFirst("Id")?.Value;
+
+            _mappedUser.Id = Convert.ToInt32(userId);
+            _UsersRepo.Add(_mappedUser, _mappedUser.Id);
             return Ok();
         }
 
@@ -74,9 +79,13 @@ namespace DIcrud.Controllers
         [HttpPut]
         public async Task<ActionResult> Update([FromBody]UserVM user)
         {
-
+            
             var _mappedUser = _mapper.Map<User>(user);
-            _UsersRepo.Update(_mappedUser);
+            var claimsIdentity = this.User.Identity as ClaimsIdentity;
+            var userId = claimsIdentity.FindFirst("Id")?.Value;
+
+            _mappedUser.Id = Convert.ToInt32(userId);
+            _UsersRepo.Update(_mappedUser, _mappedUser.Id);
             return Ok();
         }
     }

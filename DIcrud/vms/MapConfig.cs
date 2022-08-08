@@ -10,7 +10,7 @@ namespace DIcrud.vms
             CreateMap<UserVM, User>().ReverseMap();
 
             CreateMap<PostVM, Post>().ReverseMap();
-
+            CreateMap<Post, Post>();
 
         }
     }

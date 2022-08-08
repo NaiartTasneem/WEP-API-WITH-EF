@@ -13,8 +13,8 @@ namespace DIcrud.Repo
         public Task<List<TVM>>? GetAll<TVM>();
         public TVM? GetObj<TVM>(int id) where TVM : class, IBaseModel;
         public void Delete(int id);
-        public Task<T> Add(T obj);
-        public Task<T> Update(T obj);
+        public Task<T> Add(T obj,int? CreateById);
+        public Task<T> Update(T obj, int? UpdateById);
 
     }
     public class GenRepo<T> : IGenRepo<T> where T :class ,IBaseModel
@@ -55,18 +55,28 @@ namespace DIcrud.Repo
             await _context.SaveChangesAsync();
 
         }
-        public async Task<T> Add(T obj)
+        public async Task<T> Add(T obj,int? CreateById)
         {
+            Type MyT = typeof(T);
+            var prop = MyT.GetProperties().FirstOrDefault(p => p.Name == "CreateDate");
+            var val = DateTime.Now;
+            prop.SetValue(obj, val);
+            var prop2 = MyT.GetProperties().FirstOrDefault(p => p.Name == "CreateBy");
+            prop2.SetValue(obj, CreateById);
             await _context.AddAsync(obj);
             await _context.SaveChangesAsync();
             return obj;
 
         }
-        public async Task<T> Update(T obj)
+        public async Task<T> Update(T obj, int? UpdateById)
         {
-
-
-           _context.Set<T>().Update(obj);
+           Type MyT=typeof(T);
+            var prop1 = MyT.GetProperties().FirstOrDefault(p=> p.Name == "CreateDate");
+            var val = DateTime.Now;
+            prop1.SetValue(obj,val);
+            var prop2 = MyT.GetProperties().FirstOrDefault(p => p.Name == "CreateBy");
+            prop2.SetValue(obj, UpdateById);
+            _context.Set<T>().Update(obj);
            await _context.SaveChangesAsync();
             return obj;
 
