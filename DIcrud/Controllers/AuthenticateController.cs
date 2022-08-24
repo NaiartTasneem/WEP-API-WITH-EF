@@ -44,8 +44,9 @@ namespace DIcrud.Controllers
                   var authClaims = new List<Claim>
                   {
                       new Claim(ClaimTypes.Name, user.UserName),
+                        new Claim("UserId",user.Id.ToString()),
                       new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                      new Claim("UserId",user.Id.ToString()),
+                    
                   };
 
                   foreach (var userRole in userRoles)
@@ -79,6 +80,14 @@ namespace DIcrud.Controllers
                   UserName = model.Username
               };
               var result = await _userManager.CreateAsync(user, model.Password);
+            var temp = await _roleManager.RoleExistsAsync("Admin");
+
+            if (!temp)
+            {
+                var role = new UserRole();
+                role.Name = "Admin";
+                await _roleManager.CreateAsync(role);
+            }
               if (!result.Succeeded)
                   return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 

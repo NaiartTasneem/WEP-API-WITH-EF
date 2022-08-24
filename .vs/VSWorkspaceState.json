@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\DIcrud",
-    "\\DIcrud\\Controllers"
+    "\\DIcrud\\Auth",
+    "\\DIcrud\\Repo",
+    "\\DIcrud\\vms"
   ],
-  "SelectedNode": "\\DIcrud\\Controllers\\PostController.cs",
+  "SelectedNode": "\\DIcrud\\Repo\\GenRepo.cs",
   "PreviewInSolutionExplorer": false
 }

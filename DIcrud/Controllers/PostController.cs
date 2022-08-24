@@ -16,11 +16,12 @@ namespace DIcrud.Controllers
    
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
+    //[Authorize(Roles="Admin")]
 
     public class PostController : ControllerBase
     {   
-        private IPostRepo _PostsRepo;
+        private readonly IPostRepo _PostsRepo;
         private readonly IMapper _mapper;
         
       
@@ -31,12 +32,11 @@ namespace DIcrud.Controllers
           
         }
         [HttpGet]
-       
       public async Task<List<PostVM>> GetAll()
         {
             var Posts = await _PostsRepo.GetAll<Post>();
 
-            return _mapper.Map<List<Post>, List<PostVM>>(Posts);
+            return _mapper.Map< List < Post > ,List <PostVM>>(Posts);
 
         }
         [HttpGet]
@@ -52,9 +52,9 @@ namespace DIcrud.Controllers
        // [ServiceFilter(typeof(AppRole))]
         public async Task<ActionResult<PostVM>> GetPost(int id)
         {
-            var post= _PostsRepo.GetObj<Post>(id);
+            var post= _PostsRepo.Get<Post>(id);
             var _mappedPost = _mapper.Map<PostVM>(post);
-            if (_mappedPost == null)
+            if (post == null)
             return NotFound();
             return _mappedPost;
 
@@ -64,29 +64,22 @@ namespace DIcrud.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var post = _PostsRepo.GetObj<Post>(id);
-            var _mappedPost = _mapper.Map<Post>(post);
-            if (_mappedPost == null)
+            var post = _PostsRepo.Get<Post>(id);
+            if (post == null)
                 return NotFound();
             _PostsRepo.Delete(id);
             return Ok();
-
-
         }
 
-
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] PostVM newPost)
+        public async Task Create([FromBody] PostVM newPost)
         {
-             var _mappedPost = _mapper.Map<Post>(newPost);
-            
-
+            var _mappedPost = _mapper.Map<Post>(newPost);
             var claimsIdentity = this.User.Identity as ClaimsIdentity;
-            var userId = claimsIdentity.FindFirst("Id")?.Value;
-
+            var userId = claimsIdentity.FindFirst("userId")?.Value;
             _mappedPost.UserId = Convert.ToInt32(userId);
-            _PostsRepo.Add(_mappedPost, _mappedPost.UserId);
-            return Ok();
+             await _PostsRepo.Add(_mappedPost, _mappedPost.UserId);
+            
 
 
         }
@@ -97,7 +90,7 @@ namespace DIcrud.Controllers
             var _mappedPost = _mapper.Map<Post>(post);
 
             var claimsIdentity = this.User.Identity as ClaimsIdentity;
-            var userId = claimsIdentity.FindFirst("Id")?.Value;
+            var userId = claimsIdentity.FindFirst("userId")?.Value;
 
             _mappedPost.UserId = Convert.ToInt32(userId);
             _PostsRepo.Update(_mappedPost, _mappedPost.UserId);

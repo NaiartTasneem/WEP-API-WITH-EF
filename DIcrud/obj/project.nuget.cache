@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cNo5wZrOo/GiaNQZLr3zQpNg1KFnnFPdwQC1q2KXIfu9N86HZvbhFwaOIFYwRuYRF8kNLqBM9kv0pRdOP25KWA==",
+  "dgSpecHash": "OsU5fFuucDgOpLSK0XWIPh4MDDbMVeEcZDifUQ08jeUKwfECjZGDTkRrrC6oVTMJcnvz+y4oPFc01txKvgs2JQ==",
   "success": true,
-  "projectFilePath": "C:\\tasneemneirat. 201810658\\iconnect\\ttt\\WEP-API-WITH-EF\\DIcrud\\DIcrud.csproj",
+  "projectFilePath": "C:\\tasneemneirat. 201810658\\iconnect\\backendProject\\WEP-API-WITH-EF\\DIcrud\\DIcrud.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tasne\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\tasne\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

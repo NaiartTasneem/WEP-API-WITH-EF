@@ -10,7 +10,7 @@ namespace DIcrud.Models
        
             public UserContext(DbContextOptions<UserContext> options) : base(options) { }
 
-        public object User { get; internal set; }
+     
         public DbSet<User>users
             {
                 get;

@@ -2320,11 +2320,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\tasneemneirat. 201810658\\iconnect\\ttt\\WEP-API-WITH-EF\\DIcrud\\DIcrud.csproj",
+      "projectUniqueName": "C:\\tasneemneirat. 201810658\\iconnect\\backendProject\\WEP-API-WITH-EF\\DIcrud\\DIcrud.csproj",
       "projectName": "DIcrud",
-      "projectPath": "C:\\tasneemneirat. 201810658\\iconnect\\ttt\\WEP-API-WITH-EF\\DIcrud\\DIcrud.csproj",
+      "projectPath": "C:\\tasneemneirat. 201810658\\iconnect\\backendProject\\WEP-API-WITH-EF\\DIcrud\\DIcrud.csproj",
       "packagesPath": "C:\\Users\\tasne\\.nuget\\packages\\",
-      "outputPath": "C:\\tasneemneirat. 201810658\\iconnect\\ttt\\WEP-API-WITH-EF\\DIcrud\\obj\\",
+      "outputPath": "C:\\tasneemneirat. 201810658\\iconnect\\backendProject\\WEP-API-WITH-EF\\DIcrud\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\tasne\\AppData\\Roaming\\NuGet\\NuGet.Config",

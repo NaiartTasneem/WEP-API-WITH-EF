@@ -10,7 +10,20 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using DIcrud.Auth;
 using Microsoft.AspNetCore.Identity;
 
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:4200/");
+                      });
+});
+
 ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddDbContext<UserContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("ConnStr")));
 
@@ -61,6 +74,7 @@ if (app.Environment.IsDevelopment())
    
 }
 //app.ConfigureCustomExceptionMiddleware();
+app.UseCors(MyAllowSpecificOrigins);
 app.UseHttpsRedirection();
 app.MapControllers();
 app.UseAuthentication();

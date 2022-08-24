@@ -13,7 +13,7 @@ namespace DIcrud.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
-    {   private IUserRepo _UsersRepo;
+    {   private readonly IUserRepo _UsersRepo;
         private readonly IMapper _mapper;
 
         public UserController(IUserRepo UserRepo, IMapper mapper)
@@ -38,7 +38,7 @@ namespace DIcrud.Controllers
         public async Task<ActionResult<UserVM>> GetUser(int id)
         {
           
-            var user = _UsersRepo.GetObj<User>(id);
+            var user = _UsersRepo.Get<User>(id);
             var _mappedUser = _mapper.Map<UserVM>(user);
             if (_mappedUser == null)
              return NotFound();
@@ -48,15 +48,15 @@ namespace DIcrud.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task Delete(int id)
         {
-           
-            var user = _UsersRepo.GetObj<User>(id);
+           await _UsersRepo.Delete(id);
+           /* var user = _UsersRepo.GetObj<User>(id);
             var _mappedUser = _mapper.Map<User>(user);
             if (_mappedUser == null)
               return NotFound();
            _UsersRepo.Delete(id);
-            return Ok();
+            return Ok();*/
             
 
         }
@@ -64,15 +64,15 @@ namespace DIcrud.Controllers
 
         [HttpPost]
         //[Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Create([FromBody]UserVM newUser)
+        public async Task Create([FromBody]UserVM newUser)
         {
             var _mappedUser = _mapper.Map<User>(newUser);
             var claimsIdentity = this.User.Identity as ClaimsIdentity;
-            var userId = claimsIdentity.FindFirst("Id")?.Value;
+            var userId = claimsIdentity.FindFirst("userId")?.Value;
 
             _mappedUser.Id = Convert.ToInt32(userId);
-            _UsersRepo.Add(_mappedUser, _mappedUser.Id);
-            return Ok();
+           await _UsersRepo.Add(_mappedUser, _mappedUser.Id);
+           
         }
 
 
@@ -82,7 +82,7 @@ namespace DIcrud.Controllers
             
             var _mappedUser = _mapper.Map<User>(user);
             var claimsIdentity = this.User.Identity as ClaimsIdentity;
-            var userId = claimsIdentity.FindFirst("Id")?.Value;
+            var userId = claimsIdentity.FindFirst("userId")?.Value;
 
             _mappedUser.Id = Convert.ToInt32(userId);
             _UsersRepo.Update(_mappedUser, _mappedUser.Id);

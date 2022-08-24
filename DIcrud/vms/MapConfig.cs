@@ -7,10 +7,11 @@ namespace DIcrud.vms
     {
         public MapConfig()
         {
-            CreateMap<UserVM, User>().ReverseMap();
+            CreateMap<User,UserVM> ().ReverseMap();
 
-            CreateMap<PostVM, Post>().ReverseMap();
-            CreateMap<Post, Post>();
+            CreateMap<Post,PostVM>().ReverseMap();
+            CreateMap<Post, Post>().ReverseMap();
+            CreateMap<User, User>().ReverseMap();
 
         }
     }
