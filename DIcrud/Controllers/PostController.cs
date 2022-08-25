@@ -16,85 +16,88 @@ namespace DIcrud.Controllers
    
     [Route("api/[controller]/[action]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     //[Authorize(Roles="Admin")]
 
     public class PostController : ControllerBase
-    {   
-        private readonly IPostRepo _PostsRepo;
+    {
+        private readonly IPostRepo _postRepo;
         private readonly IMapper _mapper;
-        
-      
-        public PostController(IPostRepo postRepo, IMapper mapper)
+
+
+        public PostController(IPostRepo postRepo, IMapper iMapper)
         {
-            _PostsRepo = postRepo;
-            _mapper = mapper;
-          
+            _postRepo = postRepo;
+            _mapper = iMapper;
+        }
+
+        [HttpGet]
+        //[ServiceFilter(typeof(Filters))]
+        public async Task<List<PostVM>> GetAll()
+        {
+            var posts = await _postRepo.GetAll<Post>();
+            return _mapper.Map<List<PostVM>>(posts);
         }
         [HttpGet]
-      public async Task<List<PostVM>> GetAll()
+        public List<PostVM> GetBySearch(int Page, int Size, string phrase)
         {
-            var Posts = await _PostsRepo.GetAll<Post>();
-
-            return _mapper.Map< List < Post > ,List <PostVM>>(Posts);
-
-        }
-        [HttpGet]
-        public List<PostVM> GetBySearch(int PageN,int pageSize,string phrase)
-        {
-            var response = _PostsRepo.SearchPost(PageN, pageSize, phrase);
+            var response = _postRepo.SearchPost(Page, Size, phrase);
             return _mapper.Map<List<Post>, List<PostVM>>(response);
-
-            
         }
 
         [HttpGet("{id}")]
-       // [ServiceFilter(typeof(AppRole))]
-        public async Task<ActionResult<PostVM>> GetPost(int id)
+        public async Task<ActionResult<PostVM>> Get(int id)
         {
-            var post= _PostsRepo.Get<Post>(id);
-            var _mappedPost = _mapper.Map<PostVM>(post);
+
+            var post = _postRepo.Get<Post>(id);
+            var post1 = _mapper.Map<PostVM>(post);
             if (post == null)
-            return NotFound();
-            return _mappedPost;
 
-        }
-
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
-        {
-            var post = _PostsRepo.Get<Post>(id);
-            if (post == null)
                 return NotFound();
-            _PostsRepo.Delete(id);
-            return Ok();
-        }
+            return post1;
 
+        }
+        [HttpDelete("{id}")]
+
+        public async Task<ActionResult> Deletet(int id)
+        {
+
+            var user1 = _postRepo.Get<Post>(id);
+            if (user1 == null)
+
+                return NotFound();
+            _postRepo.Delete(id);
+            return Ok();
+
+        }
         [HttpPost]
-        public async Task Create([FromBody] PostVM newPost)
+        public async Task Create([FromBody] PostVM PostV)
         {
-            var _mappedPost = _mapper.Map<Post>(newPost);
+            var post1 = _mapper.Map<Post>(PostV);
+            // var post_ = _postRepo.Get<Post>(post1.Id);
+            // await _postRepo.Add(post1);
             var claimsIdentity = this.User.Identity as ClaimsIdentity;
-            var userId = claimsIdentity.FindFirst("userId")?.Value;
-            _mappedPost.UserId = Convert.ToInt32(userId);
-             await _PostsRepo.Add(_mappedPost, _mappedPost.UserId);
-            
+            var userId = claimsIdentity.FindFirst("UserId")?.Value;
+
+            post1.UserId = Convert.ToInt32(userId);
+            await _postRepo.Add(post1, post1.UserId);
 
 
         }
-
         [HttpPut]
-        public async Task<ActionResult> Update([FromBody]PostVM post)
+        public async Task Update(PostVM postV)
         {
-            var _mappedPost = _mapper.Map<Post>(post);
-
+            var post1 = _mapper.Map<Post>(postV);
             var claimsIdentity = this.User.Identity as ClaimsIdentity;
-            var userId = claimsIdentity.FindFirst("userId")?.Value;
+            var userId = claimsIdentity.FindFirst("UserId")?.Value;
 
-            _mappedPost.UserId = Convert.ToInt32(userId);
-            _PostsRepo.Update(_mappedPost, _mappedPost.UserId);
-            return Ok();
+            post1.UserId = Convert.ToInt32(userId);
+            await _postRepo.Update(_mapper.Map<Post>(postV), post1.UserId);
+
+
+
         }
+
+
     }
 }

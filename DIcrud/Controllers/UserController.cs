@@ -12,6 +12,7 @@ namespace DIcrud.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    
     public class UserController : ControllerBase
     {   private readonly IUserRepo _UsersRepo;
         private readonly IMapper _mapper;
@@ -37,12 +38,22 @@ namespace DIcrud.Controllers
        // [ServiceFilter(typeof(AppRole))]
         public async Task<ActionResult<UserVM>> GetUser(int id)
         {
-          
-            var user = _UsersRepo.Get<User>(id);
-            var _mappedUser = _mapper.Map<UserVM>(user);
-            if (_mappedUser == null)
-             return NotFound();
-            return _mappedUser;
+
+            try
+            {
+                var user = _UsersRepo.GetAll<User>();
+                var user1 = user.Result.Where(c => c.Id == id).FirstOrDefault();
+                var _mappedUser = _mapper.Map<UserVM>(user1);
+                if (_mappedUser == null)
+                    return NotFound();
+                return _mappedUser;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return NotFound();
 
         }
 
@@ -79,14 +90,24 @@ namespace DIcrud.Controllers
         [HttpPut]
         public async Task<ActionResult> Update([FromBody]UserVM user)
         {
-            
+            var  usertoUpdateLst = _UsersRepo.GetAll<User>();
+            var usertoUpdate=usertoUpdateLst.Result.Where(c => c.Id == user.Id).FirstOrDefault();
             var _mappedUser = _mapper.Map<User>(user);
             var claimsIdentity = this.User.Identity as ClaimsIdentity;
             var userId = claimsIdentity.FindFirst("userId")?.Value;
-
-            _mappedUser.Id = Convert.ToInt32(userId);
-            _UsersRepo.Update(_mappedUser, _mappedUser.Id);
+            usertoUpdate.FirstName = user.FirstName;
+            usertoUpdate.LastName = user.LastName;
+            usertoUpdate.Email = user.Email;
+            usertoUpdate.DateOfBirth = DateTime.Now;
+            usertoUpdate.TwoFactorEnabled = false;
+            usertoUpdate.LockoutEnabled = false;
+            usertoUpdate.PhoneNumberConfirmed = false;
+            usertoUpdate.AccessFailedCount = 5;
+            usertoUpdate.EmailConfirmed = false;
+            //   _mappedUser.Id = Convert.ToInt32(userId);
+            await _UsersRepo.Update(usertoUpdate, usertoUpdate.Id);
             return Ok();
         }
     }
+
 }
